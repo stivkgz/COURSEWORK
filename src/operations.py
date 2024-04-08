@@ -1,9 +1,9 @@
 import json
 from datetime import datetime
 
-def load_operations():
+def load_operations(file_path):
     """Загрузить операции из файла JSON."""
-    with open('../data/operations.json', 'r') as file:
+    with open(file_path, 'r') as file:
         data = json.load(file)
     return data
 
@@ -29,18 +29,17 @@ def mask_account_number(account_number):
     join_parts = ' '.join(parts)
     return join_parts
 
-def executed_operations():
+def executed_operations(file_path):
     """Отфильтровать выполненные операции."""
+    operations = load_operations(file_path)
     executed_operations = []
-    for operation in load_operations():
+    for operation in operations:
         if operation.get('state') == 'EXECUTED':
             executed_operations.append(operation)
     return executed_operations
 
-def last_5_operations():
+def last_5_operations(file_path):
     """Получить пять последних выполненных операций."""
-    sorted_operations = sorted(executed_operations(), key=lambda x: datetime.fromisoformat(x['date']), reverse=True)
+    sorted_operations = sorted(executed_operations(file_path), key=lambda x: datetime.fromisoformat(x['date']), reverse=True)
     return sorted_operations[:5]
-
-
 
