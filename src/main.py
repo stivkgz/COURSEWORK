@@ -1,7 +1,7 @@
-from operations import last_5_operations, mask_card_number, mask_account_number
+from project.src.operations import last_5_operations, mask_card_number, mask_account_number
 from datetime import datetime
 
-operations = last_5_operations()
+operations = last_5_operations('../data/operations.json')
 
 for operation in operations:
     date = datetime.strptime(operation['date'], '%Y-%m-%dT%H:%M:%S.%f').strftime('%d.%m.%Y')
@@ -17,7 +17,7 @@ for operation in operations:
     amount = float(operation['operationAmount']['amount'])
     currency = operation['operationAmount']['currency']['name']
     print()
-    print(f'{date} {description}\n{from_account} -> {to_account} {amount}{currency}')
+    print(f'{date} {description}\n{from_account} -> {to_account} {amount} {currency}')
 
 
 
